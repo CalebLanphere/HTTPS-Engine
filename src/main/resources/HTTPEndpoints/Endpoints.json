@@ -1,0 +1,6 @@
+[
+  {
+    "endpoint": "/test",
+    "handlerClass": "com.CreativityStudios.HTTP.HTTPHandlers.TestHttpHandler"
+  }
+]
