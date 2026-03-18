@@ -21,16 +21,21 @@ public class TestHttpHandler implements HttpHandler {
 
         switch(exchange.getRequestMethod()) {
             case HTTPMethods.GET:
-                String response = "<body><p>test</p></body>";
+                String response = "<div id='elementsWanted'><button>test</button><button>test 2</button></div>";
                 exchange.getResponseHeaders().add("Content-type", "text/html");
-                exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, response.length());
+                exchange.getResponseHeaders().add("Access-control-allow-origin", "*");
+                exchange.sendResponseHeaders(HTTPStatus.OK, response.length());
                 writer.write(response.getBytes());
                 writer.close();
                 break;
             case HTTPMethods.PUT:
-                
+                exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, -1);
+                reader.close();
+                writer.close();
             default:
                 exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, -1);
+                reader.close();
+                writer.close();
         }
     }
 }

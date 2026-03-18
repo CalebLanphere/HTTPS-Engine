@@ -53,7 +53,6 @@ public class HTTPServlet {
             valToModify = valToModify.substring(0, valToModify.length() - 1);
             handlers[i] = valToModify;
         }
-        System.out.println(endpoints[0]);
         return endpoints;
     }
 
