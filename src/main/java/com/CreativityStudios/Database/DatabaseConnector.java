@@ -13,9 +13,9 @@ public class DatabaseConnector {
         POOLED_CONNECTIONS.setTestOnCreate(true);
         POOLED_CONNECTIONS.setTestWhileIdle(true);
         POOLED_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
-        POOLED_CONNECTIONS.setUrl();
-        POOLED_CONNECTIONS.setUsername();
-        POOLED_CONNECTIONS.setPassword();
+//        POOLED_CONNECTIONS.setUrl();
+//        POOLED_CONNECTIONS.setUsername();
+//        POOLED_CONNECTIONS.setPassword();
     }
 
     public static Connection getConnection() throws SQLException {

@@ -2,6 +2,7 @@ package com.CreativityStudios.HTTP;
 
 import com.CreativityStudios.File.FileCreator;
 import com.CreativityStudios.JSON.JSONReader;
+import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import jakarta.json.Json;
@@ -59,12 +60,11 @@ public class HTTPServlet {
      * @throws IllegalAccessException
      */
     public void start() throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        HttpServer httpServer = HttpServer.create();
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8080), 0);
         setEndpointsFromFile();
         for(int i = 0; i < AMOUNT_OF_CONTEXT_URLS; i++) {
             httpServer.createContext(endpoints[i], (HttpHandler) Class.forName("com.CreativityStudios.HTTP.HTTPHandlers.TestHttpHandler").getConstructor().newInstance());
         }
-        httpServer.bind(new InetSocketAddress(8080), 0);
         httpServer.start();
     }
 }
