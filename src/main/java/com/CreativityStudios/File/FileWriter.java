@@ -1,3 +1,13 @@
+/**
+ * FileWriter class
+ *
+ * Loads, writes, and saves to files
+ *
+ * @author Caleb Lanphere
+ *
+ * Copyright 2026 Caleb Lanphere, All Rights Reserved.
+ */
+
 package com.CreativityStudios.File;
 
 import java.io.File;
@@ -9,6 +19,11 @@ public class FileWriter {
     private File file;
     private PrintStream writer;
 
+    /**
+     * Gets the file at the provided pathway and prepares it for writing
+     * @param pathToFile Pathway to the file to write into
+     * @throws FileNotFoundException If the file is not found
+     */
     public FileWriter(String pathToFile) throws FileNotFoundException {
         file = new File(pathToFile);
         writer = new PrintStream(new FileOutputStream(file));

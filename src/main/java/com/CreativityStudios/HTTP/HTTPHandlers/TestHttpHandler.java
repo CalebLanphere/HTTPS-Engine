@@ -1,56 +1,80 @@
 package com.CreativityStudios.HTTP.HTTPHandlers;
 
 import com.CreativityStudios.HTTP.HTTPMethods;
+import com.CreativityStudios.HTTP.HTTPResponse;
 import com.CreativityStudios.HTTP.HTTPStatus;
-import com.CreativityStudios.HTTP.HttpRequest;
+import com.CreativityStudios.HTTP.HTTPRequest;
+import com.CreativityStudios.JSON.JSONWriter;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
 import java.io.*;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+ TODO ABSTRACT FURTHER DOWN IF POSSIBLE
+ */
 public class TestHttpHandler implements HttpHandler {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private InputStream reader;
-    private OutputStream writer;
 
     private boolean isURLPathExact(String url) {
-        if(!url.equals("/test/")) {
+        if(!url.equals("/test")) {
             return false;
         }
         return true;
     }
 
-    private void closeReaderAndWriter() throws IOException {
-        reader.close();
-        writer.close();
+    private boolean isURLPathContainingQueryMatch(String url) {
+        if(!url.contains("/test?query=")) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        HttpRequest request = new HttpRequest(exchange);
-        if(!isURLPathExact(request.getURIPath())) {
-            LOGGER.log(Level.INFO, "Wrong URL at /test");
-            exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, -1);
-            closeReaderAndWriter();
-        }
+        HTTPRequest request = new HTTPRequest(exchange);
+        HTTPResponse response = new HTTPResponse(exchange);
         LOGGER.log(Level.INFO, "Exchange at /test");
-        reader = exchange.getRequestBody();
-        writer = exchange.getResponseBody();
 
         switch(request.getRequestMethod()) {
             case HTTPMethods.GET:
-                String response = "<div id='elementsWanted'><button>test</button><button>test 2</button></div>";
-                exchange.getResponseHeaders().add("Content-type", "text/html");
-                exchange.getResponseHeaders().add("Access-control-allow-origin", "*");
-                exchange.sendResponseHeaders(HTTPStatus.OK, response.length());
-                writer.write(response.getBytes());
+                if(!isURLPathExact(request.getURIPath())) {
+                    LOGGER.log(Level.INFO, "Wrong URL at /test");
+                    response.sendResponseHeaders(HTTPStatus.BAD_REQUEST);
+                    break;
+                }
+                response.addHeaderEntry("Content-Type", "text/html");
+                response.addHeaderEntry("Access-control-allow-origin", "*");
+                response.sendResponseHeaders(HTTPStatus.OK);
+                response.addToResponseBody("<div id='elementsWanted'><button>test</button><button>test 2</button></div>");
                 break;
             case HTTPMethods.PUT:
-                exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, -1);
+                if(!isURLPathContainingQueryMatch(request.getURIPath())) {
+                    LOGGER.log(Level.INFO, "Wrong URL at /test");
+                    exchange.sendResponseHeaders(HTTPStatus.BAD_REQUEST, -1);
+                    break;
+                }
+                LOGGER.log(Level.INFO, request.getRequestBodyAsString());
+                response.sendResponseHeaders(HTTPStatus.METHOD_NOT_ALLOWED);
+                break;
+            case HTTPMethods.PATCH:
+                if(!isURLPathContainingQueryMatch(request.getURIPath())) {
+                    LOGGER.log(Level.INFO, "Wrong URL at /test");
+                    response.sendResponseHeaders(HTTPStatus.BAD_REQUEST);
+                    break;
+                }
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("test", "value");
+                response.sendResponseHeaders(HTTPStatus.OK);
+                response.addToResponseBody(JSONWriter.createJsonTestObject(map));
+                break;
             default:
-                exchange.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED, -1);
+                response.sendResponseHeaders(HTTPStatus.NOT_IMPLEMENTED);
+                break;
         }
-        closeReaderAndWriter();
+        response.close();
     }
 }

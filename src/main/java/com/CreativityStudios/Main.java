@@ -1,24 +1,30 @@
+/**
+ * Project Expiry - Application Start class
+ * @author Caleb Lanphere
+ *
+ * Last Modified 04/09/2026
+ *
+ * Copyright 2026 Caleb Lanphere, All Rights Reserved
+ *
+ */
+
 package com.CreativityStudios;
 
 import com.CreativityStudios.HTTP.HTTPServlet;
-
-import com.CreativityStudios.File.FileReader;
-import com.CreativityStudios.JSON.JSONReader;
-import com.sun.net.httpserver.HttpHandler;
-
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final HTTPServlet servlet = new HTTPServlet();
 
     public static void main(String[] args) {
         try {
-            HTTPServlet servlet = new HTTPServlet();
             servlet.start();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error on starting HTTP Servlet: " + e.getClass() + " " + e.getMessage());
+            // Logs the exception received, the class that issued it, and the message associated
+            LOGGER.log(Level.SEVERE, "Error on starting HTTP Servlet: " + e.getClass() + " " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             System.exit(1);
         }
         LOGGER.log(Level.INFO, "Service started");
