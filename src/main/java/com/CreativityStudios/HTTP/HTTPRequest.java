@@ -18,6 +18,10 @@ import jakarta.json.JsonObject;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HTTPRequest {
     private final Headers headers;
@@ -77,6 +81,7 @@ public class HTTPRequest {
 
     /**
      * Gets all queries associated with the request
+     * TODO implement HTTPQueryReader to return HashMap of queries
      *
      * @return String queries associated with the request
      */

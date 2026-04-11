@@ -33,6 +33,12 @@ public class TestHttpHandler implements HttpHandler {
         return true;
     }
 
+    /**
+     * TODO attempt abstraction to remove complexity of handling the HttpExchange directly
+     * @param exchange the exchange containing the request from the
+     *                 client and used to send the response
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         HTTPRequest request = new HTTPRequest(exchange);
@@ -57,8 +63,8 @@ public class TestHttpHandler implements HttpHandler {
                     exchange.sendResponseHeaders(HTTPStatus.BAD_REQUEST, -1);
                     break;
                 }
-                LOGGER.log(Level.INFO, request.getRequestBodyAsString());
-                response.sendResponseHeaders(HTTPStatus.METHOD_NOT_ALLOWED);
+                LOGGER.log(Level.INFO, request.getURIQuery());
+                response.sendResponseHeaders(HTTPStatus.OK);
                 break;
             case HTTPMethods.PATCH:
                 if(!isURLPathContainingQueryMatch(request.getURIPath())) {
