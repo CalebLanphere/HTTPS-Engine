@@ -1,4 +1,4 @@
-package com.CreativityStudios.HTTP.HTTPHandlers;
+package com.CreativityStudios.HTTPS.HTTPHandlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

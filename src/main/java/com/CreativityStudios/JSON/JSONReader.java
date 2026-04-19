@@ -10,14 +10,11 @@
 
 package com.CreativityStudios.JSON;
 
+import com.CreativityStudios.Database.DatabaseCredentials;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.stream.JsonParser;
-
 import java.io.StringReader;
-import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JSONReader {
@@ -25,12 +22,14 @@ public class JSONReader {
     private static JsonObject jsonObject;
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public static void jsonStringToJsonArray(String jsonString) {
+    public static JsonArray jsonStringToJsonArray(String jsonString) {
         jsonArray = Json.createReader(new StringReader(jsonString)).readArray();
+        return jsonArray;
     }
 
-    public static void jsonStringToJsonObject(String jsonString) {
+    public static JsonObject jsonStringToJsonObject(String jsonString) {
         jsonObject = Json.createReader(new StringReader(jsonString)).readObject();
+        return jsonObject;
     }
 
 
@@ -49,6 +48,22 @@ public class JSONReader {
      */
     public static String parseJsonObjectAsString(JsonObject object) {
         return String.valueOf(object);
+    }
+
+    public static DatabaseCredentials[] parseJsonObjectAsDatabaseCredentials(JsonObject object) {
+        String url = object.getString("DatabaseURL");
+        JsonArray credentialArray = object.getJsonArray("databaseCredentials");
+        DatabaseCredentials[] credentials = new DatabaseCredentials[credentialArray.size()];
+
+        for(int i = 0; i < credentialArray.size(); i++) {
+            credentials[i] = new DatabaseCredentials();
+
+            credentials[i].setDatabaseUrl(url);
+            credentials[i].setDatabaseCredentialType(credentialArray.getJsonObject(i).getString("CredentialType"));
+            credentials[i].setDatabaseUsername(credentialArray.getJsonObject(i).getString("Username"));
+            credentials[i].setDatabasePassword(credentialArray.getJsonObject(i).getString("Password"));
+        }
+        return credentials;
     }
 
     /**

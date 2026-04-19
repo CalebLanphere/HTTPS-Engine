@@ -8,19 +8,17 @@
  * Copyright 2026 Caleb Lanphere, All Rights Reserved.
  */
 
-package com.CreativityStudios.HTTP;
+package com.CreativityStudios.HTTPS;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpPrincipal;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HTTPRequest {
@@ -31,6 +29,9 @@ public class HTTPRequest {
     private final int port;
     private final String requestMethod;
     private final byte[] bodyContents;
+    private final HttpPrincipal principal;
+
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
      * Creates an HTTPRequest object with the supplied exchange
@@ -46,6 +47,7 @@ public class HTTPRequest {
         port = exchange.getLocalAddress().getPort();
         requestMethod = exchange.getRequestMethod();
         bodyContents = exchange.getRequestBody().readAllBytes();
+        principal = exchange.getPrincipal();
     }
 
     /**
@@ -77,6 +79,10 @@ public class HTTPRequest {
         } else {
             return uri.getPath();
         }
+    }
+
+    public HttpPrincipal getPrincipal() {
+        return principal;
     }
 
     /**
@@ -156,5 +162,9 @@ public class HTTPRequest {
      */
     public JsonArray getRequestBodyAsJSONArray() {
         return Json.createReader(new StringReader(new String(bodyContents))).readArray();
+    }
+
+    public Headers getHeaders() {
+        return headers;
     }
 }

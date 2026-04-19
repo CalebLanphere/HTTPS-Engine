@@ -17,24 +17,25 @@
  * Copyright 2026 Caleb Lanphere, All Rights Reserved
  */
 
-package com.CreativityStudios.HTTP.HTTPHandlers;
+package com.CreativityStudios.HTTPS.HTTPHandlers;
 
 import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.Exceptions.NotAcceptedQueryException;
-import com.CreativityStudios.HTTP.HTTPMethods;
-import com.CreativityStudios.HTTP.HTTPResponse;
-import com.CreativityStudios.HTTP.HTTPStatus;
-import com.CreativityStudios.HTTP.HTTPRequest;
+import com.CreativityStudios.HTTPS.HTTPMethods;
+import com.CreativityStudios.HTTPS.HTTPResponse;
+import com.CreativityStudios.HTTPS.HTTPStatus;
+import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BaseHTTPHandler implements HttpHandler {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    protected static String ENDPOINT_URI = "/test";
+    protected String ENDPOINT_URI = "/test";
 
     /**
      * Handles the incoming HTTP requests and directs them to their associated HTTP method mapped methods
@@ -47,9 +48,14 @@ public class BaseHTTPHandler implements HttpHandler {
         HTTPRequest request = new HTTPRequest(exchange);
         HTTPResponse response = new HTTPResponse(exchange);
 
+
         switch(request.getRequestMethod()) {
             case HTTPMethods.GET:
-                getMapping(request, response);
+                try {
+                    getMapping(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case HTTPMethods.POST:
                 postMapping(request, response);
@@ -90,7 +96,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void getMapping(HTTPRequest request, HTTPResponse response) throws IOException{
+    protected void getMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 

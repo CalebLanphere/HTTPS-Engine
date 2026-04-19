@@ -15,7 +15,7 @@
  * Copyright 2026 Caleb Lanphere, All Rights Reserved.
  */
 
-package com.CreativityStudios.HTTP;
+package com.CreativityStudios.HTTPS;
 
 public class HTTPStatus {
     /** The client should continue the request */

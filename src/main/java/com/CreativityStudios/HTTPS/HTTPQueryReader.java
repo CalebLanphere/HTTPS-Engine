@@ -8,7 +8,7 @@
  * Copyribght 2026 Caleb Lanphere, All Rights Reserved.
  */
 
-package com.CreativityStudios.HTTP;
+package com.CreativityStudios.HTTPS;
 
 import java.util.HashMap;
 

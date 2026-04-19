@@ -12,6 +12,9 @@ package com.CreativityStudios.File;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class FileManager {
     private static File file;
@@ -34,14 +37,24 @@ public class FileManager {
      * @return boolean if file creation was successful
      * @throws IOException If the communication chain for the file is interrupted
      */
-    public static boolean createFileAtPath(String pathToAddFileAt) throws IOException {
-        file = new File(pathToAddFileAt);
+    public static boolean createFileAtPath(String pathToAddFileAt, String fileName) throws IOException {
+        file = new File(pathToAddFileAt + "/" + fileName);
         return file.createNewFile();
     }
 
     // @TODO properly create hidden file
-    public static boolean createFileAtPath(String pathToAddFileAt, boolean createHiddenFile) throws IOException {
-        return false;
+    public static boolean createFileAtPath(String pathToAddFileAt, String fileName, boolean createHiddenFile) throws IOException {
+        boolean result = false;
+
+        if(System.getProperty("os.name").equals("Windows_NT")) {
+            file = new File(pathToAddFileAt + "/" + fileName);
+            Files.setAttribute(Path.of(pathToAddFileAt + "/" + fileName), "dos:hidden", true);
+        } else {
+            file = new File(pathToAddFileAt + "/." + fileName);
+            result = file.createNewFile();
+        }
+
+        return result;
     }
 
     /**

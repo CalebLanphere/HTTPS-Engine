@@ -10,17 +10,25 @@
 
 package com.CreativityStudios;
 
-import com.CreativityStudios.HTTP.HTTPServlet;
+import com.CreativityStudios.Database.DatabaseConnector;
+import com.CreativityStudios.Database.DatabaseCredentials;
+import com.CreativityStudios.File.FileManager;
+import com.CreativityStudios.HTTPS.HTTPSServlet;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final HTTPServlet servlet = new HTTPServlet();
+    private static final HTTPSServlet servlet = new HTTPSServlet();
+    private static DatabaseConnector database = null;
 
     public static void main(String[] args) {
         try {
+             database = new DatabaseConnector();
+             LOGGER.log(Level.INFO, String.valueOf(DatabaseConnector.getReaderConnection()));
             servlet.start();
         } catch (Exception e) {
             // Logs the exception received, the class that issued it, and the message associated

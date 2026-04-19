@@ -9,14 +9,13 @@
  * Copyright 2026 Caleb Lanphere, All Rights Reserved.
  */
 
-package com.CreativityStudios.HTTP;
+package com.CreativityStudios.HTTPS;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.logging.Logger;
 
 public class HTTPResponse {
     private final HttpExchange exchange;
@@ -71,10 +70,10 @@ public class HTTPResponse {
      * @throws IOException If the communication stream is interrupted for any reason
      */
     public void addToResponseBody(Object object) throws IOException {
-        String responseBody = String.valueOf(object);
-        addToMessageLength(responseBody.getBytes().length);
+        byte[] responseBody = String.valueOf(object).getBytes();
+        addToMessageLength(responseBody.length);
 
-        writer.write(responseBody.getBytes());
+        writer.write(responseBody);
     }
 
     /**

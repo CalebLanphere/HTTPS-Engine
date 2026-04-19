@@ -1,10 +1,14 @@
 [
   {
     "endpoint": "/test",
-    "handlerClass": "com.CreativityStudios.HTTP.HTTPHandlers.BaseHTTPHandler"
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandlerTest"
   },
   {
     "endpoint": "/health",
-    "handlerClass": "com.CreativityStudios.HTTP.HTTPHandlers.HTTPHandler"
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandler"
+  },
+  {
+    "endpoint": "/api/v1/login",
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPLoginHandler"
   }
 ]

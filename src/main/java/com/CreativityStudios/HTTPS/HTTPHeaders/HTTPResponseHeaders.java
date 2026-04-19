@@ -1,8 +1,10 @@
-package com.CreativityStudios.HTTP.HTTPHeaders;
+package com.CreativityStudios.HTTPS.HTTPHeaders;
 
-public class HTTPCachingHeaders {
-    /** The time (seconds) content has been in cache */
-    public static final String CACHE_AGE = "Age";
+public class HTTPResponseHeaders {
+    /** Defines the method used for authentication to access a resource */
+    public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
+    /** Defines the proxy method that should be used for authentication for accessing a resource */
+    public static final String PROXY_AUTHENTICATE = "Proxy-Authenticate";
     /** Rules for caching objects | Can contain multiple options for values */
     public static final String CACHE_RULES = "Cache-Control";
     /** Which cache on the client to clear | Can contain multiple options for values */
