@@ -25,6 +25,7 @@ public class HTTPHandlerTest extends BaseHTTPHandler{
     }
 
     // TODO abstract away error handling for incorrect URIs or improper URIs
+    // TODO abstract further to hide OPTIONS protocol
     @Override
     public void getMapping(HTTPRequest request, HTTPResponse response) throws IOException {
         ArrayList<EOCPElement> eocpList = new ArrayList<>();
