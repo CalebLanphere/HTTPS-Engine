@@ -10,6 +10,7 @@
 
 package com.CreativityStudios.JSON;
 
+import com.CreativityStudios.Database.UserPermissions;
 import com.CreativityStudios.GCOP.EOCPElement;
 import com.CreativityStudios.GCOP.EOCPValues;
 import jakarta.json.*;
@@ -67,6 +68,13 @@ public class JSONWriter {
             }
             builder.add("Children", arrBuilder.build());
         }
+
+        return builder.build();
+    }
+
+    public static JsonObject createUserPermissionsJsonObject(UserPermissions permissions) {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        builder.add("permissions", "all");
 
         return builder.build();
     }

@@ -11,10 +11,15 @@
 package com.CreativityStudios.JSON;
 
 import com.CreativityStudios.Database.DatabaseCredentials;
+import com.CreativityStudios.Database.UserEntry;
+import com.CreativityStudios.Database.UserPermissions;
+import com.CreativityStudios.HTTPS.EndpointConfiguration;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import java.io.StringReader;
+import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JSONReader {
@@ -30,15 +35,6 @@ public class JSONReader {
     public static JsonObject jsonStringToJsonObject(String jsonString) {
         jsonObject = Json.createReader(new StringReader(jsonString)).readObject();
         return jsonObject;
-    }
-
-
-    public static String[] parseJsonArrayValueAsStringArray(String key) {
-        String[] jsonValuesAsString = new String[jsonArray.size()];
-        for(int i = 0; i < jsonArray.size(); i++) {
-            jsonValuesAsString[i] = removeQuotationsFromString(jsonArray.getJsonObject(i).get(key).toString());
-        }
-        return jsonValuesAsString;
     }
 
     /**
@@ -64,6 +60,38 @@ public class JSONReader {
             credentials[i].setDatabasePassword(credentialArray.getJsonObject(i).getString("Password"));
         }
         return credentials;
+    }
+
+    public static EndpointConfiguration[] parseJsonArrayAsEndpointConfigurations(JsonArray array) {
+        EndpointConfiguration[] configs = new EndpointConfiguration[array.size()];
+
+        for(int i = 0; i < array.size(); i++) {
+            JsonObject object = array.getJsonObject(i);
+            configs[i] = new EndpointConfiguration(object.getString("endpoint"), object.getString("handlerClass"), object.getBoolean("requireAuthentication"));
+        }
+        return configs;
+    }
+
+    public static UserPermissions parseJsonObjectAsUserPermissions(JsonObject object) {
+        return new UserPermissions();
+    }
+
+    public static UserEntry parseJsonObjectAsUserEntry(JsonObject object) {
+        return new UserEntry(UUID.fromString(String.valueOf(object.get("id"))),
+                String.valueOf(object.get("email")),
+                String.valueOf(object.get("password")),
+                String.valueOf(object.get("domain")),
+                parseJsonObjectAsUserPermissions(object.get("permissions").asJsonObject())
+        );
+    }
+
+    public static UserEntry parseJsonObjectAsUserEntryToCreate(JsonObject object) {
+        UserEntry entry = new UserEntry(object.getString("email"),
+                object.getString("password"),
+                object.getString("domain"),
+                parseJsonObjectAsUserPermissions(object.getJsonObject("permissions")));
+        LOGGER.log(Level.INFO, entry.toString());
+        return entry;
     }
 
     /**

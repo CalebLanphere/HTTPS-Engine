@@ -35,14 +35,11 @@ public class HTTPSServlet {
 
     /**
      * Gets all listed endpoints under the Endpoints.json configuration file
-     * @return HashMap<String, String> A map with the endpoint as key and the class of the HttpHandler as the value
+     * @return EndpointConfiguration[] an array of all EndpointConfiguration's read from the configuration file
      * @throws IOException If a file access operation fails or the file is not readable from its stored location
      */
-    private static HashMap<String, String> getEndpointsFromFile() throws IOException{
+    private static EndpointConfiguration[] getEndpointsFromFile() throws IOException{
         String endpointFileLocation = "src/main/resources/HTTPEndpoints/Endpoints.json";
-        HashMap<String, String> endpointMappings = new HashMap<String, String>();
-        String[] endpoints;
-        String[] handlers;
 
         if(!FileManager.doesFileExist(endpointFileLocation)) {
             LOGGER.log(Level.SEVERE, "Endpoints.json does not exist at directory: "
@@ -55,18 +52,11 @@ public class HTTPSServlet {
             throw new IOException();
         }
 
-        FileReader reader =
-                new FileReader(endpointFileLocation);
-        JSONReader.jsonStringToJsonArray(reader.readFileToString());
+        FileReader reader = new FileReader(endpointFileLocation);
+        EndpointConfiguration[] configs =
+                JSONReader.parseJsonArrayAsEndpointConfigurations(JSONReader.jsonStringToJsonArray(reader.readFileToString()));
 
-        endpoints = JSONReader.parseJsonArrayValueAsStringArray( "endpoint");
-        handlers = JSONReader.parseJsonArrayValueAsStringArray("handlerClass");
-
-        for(int i = 0; i < endpoints.length; i++) {
-            endpointMappings.put(endpoints[i], handlers[i]);
-        }
-
-        return endpointMappings;
+        return configs;
     }
 
     /**
@@ -122,19 +112,15 @@ public class HTTPSServlet {
     public void start() throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
         HttpsServer httpsServer = HttpsServer.create(new InetSocketAddress(8080), 0);
         SSLContext sslContext = createSSLContext();
-        boolean endpointRequiresAuthentication = true;
 
-        for (Map.Entry<String, String> entry : getEndpointsFromFile().entrySet()) {
-            String endpoint = entry.getKey();
-            String handlerClass = entry.getValue();
-
-            if(endpointRequiresAuthentication) {
-                httpsServer.createContext(endpoint,
-                                (HttpHandler) Class.forName(handlerClass).getConstructor().newInstance())
+        for (EndpointConfiguration config : getEndpointsFromFile()) {
+            if(config.isAuthRequired()) {
+                httpsServer.createContext(config.getEndpoint(),
+                        config.getInstanceOfHandler())
                         .setAuthenticator(new BasicAuthentication());
                 httpsServer.setHttpsConfigurator(new HttpsConfigurator(sslContext));
             } else {
-                httpsServer.createContext(endpoint, (HttpHandler) Class.forName(handlerClass).getConstructor().newInstance());
+                httpsServer.createContext(config.getEndpoint(), config.getInstanceOfHandler());
                 httpsServer.setHttpsConfigurator(new HttpsConfigurator(sslContext));
 
             }

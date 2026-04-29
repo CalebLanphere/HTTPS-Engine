@@ -1,14 +1,22 @@
 [
   {
     "endpoint": "/test",
-    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandlerTest"
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandlerTest",
+    "requireAuthentication": true
   },
   {
     "endpoint": "/health",
-    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandler"
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandler",
+    "requireAuthentication": false
   },
   {
     "endpoint": "/api/v1/login",
-    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPLoginHandler"
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPLoginHandler",
+    "requireAuthentication": true
+  },
+  {
+    "endpoint": "/api/v1/signup",
+    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPSignupHandler",
+    "requireAuthentication": false
   }
 ]

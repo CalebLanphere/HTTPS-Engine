@@ -70,7 +70,7 @@ public class DigestAuthenticator extends Authenticator {
                             HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
 
                             if(session != null) {
-                                sessions.add("session=1");
+//                                sessions.add("session=1");
                                 return new Success(newAuthPrincipal);
                             } else {
                                 exchange.getResponseHeaders().add("Set-Cookie", "session=1");

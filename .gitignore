@@ -44,3 +44,4 @@ build/
 ### Project Files ###
 src/main/resources/Database/.dbaccess.json
 src/main/resources/SSLKeystores/clientkeystore
+src/main/resources/Database/.TempDatabaseInitializationCommands.sql

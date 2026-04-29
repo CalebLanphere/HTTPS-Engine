@@ -26,6 +26,8 @@ import java.util.logging.Logger;
 public class DatabaseConnector {
     private static final BasicDataSource POOLED_READER_CONNECTIONS = new BasicDataSource();
     private static final BasicDataSource POOLED_WRITER_CONNECTIONS = new BasicDataSource();
+    private static final BasicDataSource POOLED_USERDB_READER_CONNECTIONS = new BasicDataSource();
+    private static final BasicDataSource POOLED_USERDB_WRITER_CONNECTIONS = new BasicDataSource();
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // TODO make properly static by removing constructor and forcing it to construct under usage
@@ -52,6 +54,25 @@ public class DatabaseConnector {
                     POOLED_WRITER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
                     POOLED_WRITER_CONNECTIONS.setUsername(credential.getUsername());
                     POOLED_WRITER_CONNECTIONS.setPassword(credential.getPassword());
+                    break;
+                case "UserDBReader":
+                    POOLED_USERDB_READER_CONNECTIONS.setInitialSize(10);
+                    POOLED_USERDB_READER_CONNECTIONS.setTestOnCreate(true);
+                    POOLED_USERDB_READER_CONNECTIONS.setTestWhileIdle(true);
+                    POOLED_USERDB_READER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_USERDB_READER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
+                    POOLED_USERDB_READER_CONNECTIONS.setUsername(credential.getUsername());
+                    POOLED_USERDB_READER_CONNECTIONS.setPassword(credential.getPassword());
+                    break;
+                case "UserDBWriter":
+                    POOLED_USERDB_WRITER_CONNECTIONS.setInitialSize(2);
+                    POOLED_USERDB_WRITER_CONNECTIONS.setTestOnCreate(true);
+                    POOLED_USERDB_WRITER_CONNECTIONS.setTestWhileIdle(true);
+                    POOLED_USERDB_WRITER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_USERDB_WRITER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
+                    POOLED_USERDB_WRITER_CONNECTIONS.setUsername(credential.getUsername());
+                    POOLED_USERDB_WRITER_CONNECTIONS.setPassword(credential.getPassword());
+                    break;
             }
         }
     }
@@ -74,5 +95,25 @@ public class DatabaseConnector {
      */
     public static Connection getWriterConnection() throws SQLException {
         return POOLED_WRITER_CONNECTIONS.getConnection();
+    }
+
+    /**
+     * Gets a random free connection to use for account reading communications
+     *
+     * @return Connection that is used for database communications
+     * @throws SQLException If the connection to the database if invalid
+     */
+    public static Connection getUserDbReaderConnection() throws SQLException {
+        return POOLED_USERDB_READER_CONNECTIONS.getConnection();
+    }
+
+    /**
+     * Gets a random free connection to use for account writing communications
+     *
+     * @return Connection that is used for database communications
+     * @throws SQLException If the connection to the database if invalid
+     */
+    public static Connection getUserDbWriterConnection() throws SQLException {
+        return POOLED_USERDB_WRITER_CONNECTIONS.getConnection();
     }
 }
