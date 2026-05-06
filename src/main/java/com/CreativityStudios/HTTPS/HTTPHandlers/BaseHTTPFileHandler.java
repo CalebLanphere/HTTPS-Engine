@@ -21,10 +21,10 @@ package com.CreativityStudios.HTTPS.HTTPHandlers;
 
 import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.Exceptions.NotAcceptedQueryException;
-import com.CreativityStudios.HTTPS.HTTPMethods;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPMethods;
 import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.CreativityStudios.HTTPS.HTTPResponse;
-import com.CreativityStudios.HTTPS.HTTPStatus;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPStatus;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 

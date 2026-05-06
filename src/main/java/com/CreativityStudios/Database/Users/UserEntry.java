@@ -1,4 +1,4 @@
-package com.CreativityStudios.Database;
+package com.CreativityStudios.Database.Users;
 
 import java.util.Base64;
 import java.util.UUID;

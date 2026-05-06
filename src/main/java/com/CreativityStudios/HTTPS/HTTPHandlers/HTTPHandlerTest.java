@@ -4,17 +4,14 @@ import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.Exceptions.NotAcceptedQueryException;
 import com.CreativityStudios.GCOP.EOCPElement;
 import com.CreativityStudios.GCOP.EOCPElementBuilder;
-import com.CreativityStudios.GCOP.EOCPValues;
 import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.CreativityStudios.HTTPS.HTTPResponse;
-import com.CreativityStudios.HTTPS.HTTPStatus;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPStatus;
 import com.CreativityStudios.JSON.JSONWriter;
-import jakarta.json.JsonArray;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HTTPHandlerTest extends BaseHTTPHandler{

@@ -11,9 +11,9 @@
 package com.CreativityStudios.JSON;
 
 import com.CreativityStudios.Database.DatabaseCredentials;
-import com.CreativityStudios.Database.UserEntry;
-import com.CreativityStudios.Database.UserPermissions;
-import com.CreativityStudios.HTTPS.EndpointConfiguration;
+import com.CreativityStudios.Database.Users.UserEntry;
+import com.CreativityStudios.Database.Users.UserPermissions;
+import com.CreativityStudios.HTTPS.Endpoint.EndpointConfiguration;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;

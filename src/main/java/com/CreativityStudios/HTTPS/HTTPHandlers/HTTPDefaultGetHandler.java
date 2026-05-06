@@ -3,15 +3,11 @@ package com.CreativityStudios.HTTPS.HTTPHandlers;
 import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.Exceptions.NotAcceptedQueryException;
 import com.CreativityStudios.File.FileReader;
-import com.CreativityStudios.GCOP.EOCPElement;
-import com.CreativityStudios.GCOP.EOCPElementBuilder;
 import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.CreativityStudios.HTTPS.HTTPResponse;
-import com.CreativityStudios.HTTPS.HTTPStatus;
-import com.CreativityStudios.JSON.JSONWriter;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPStatus;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 

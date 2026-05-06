@@ -1,11 +1,10 @@
-package com.CreativityStudios.HTTPS;
+package com.CreativityStudios.HTTPS.Endpoint;
 
 import com.CreativityStudios.File.FileEndpoint;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +26,6 @@ public class HTTPEndpointGenerator {
         for(FileEndpoint entry : createdFileEndpoints) {
             endpoints[index] = new EndpointConfiguration(entry.getEndpoint(), DEFAULT_GET_HANDLER, false, entry.getFileLocation(), entry.getHttpCompatibleDataType());
             index++;
-            LOGGER.log(Level.INFO, "endpoint: " + endpoints[index - 1].getEndpoint() + " | type: " + entry.getHttpCompatibleDataType());
         }
 
         return endpoints;
@@ -38,10 +36,11 @@ public class HTTPEndpointGenerator {
         ArrayList<FileEndpoint> fileMappings = new ArrayList<>();
         int index = 0;
 
-        for(File fileEntry : directory.listFiles()) {
+        for(File fileEntry : Objects.requireNonNull(directory.listFiles())) {
             if(fileEntry == null) {
                 break;
             }
+
             if(fileEntry.isDirectory()) {
                 ArrayList<FileEndpoint> mapsInsideSubDirectory = new HTTPEndpointGenerator(fileEntry.getPath()).navigateFolder(fileEntry.getPath(), "/" + fileEntry.getPath().split(PATH)[1]);
                 fileMappings.addAll(mapsInsideSubDirectory);
@@ -56,7 +55,6 @@ public class HTTPEndpointGenerator {
                     }
                 } else {
                     if (!fileEntry.getName().contains(".DS_Store")) {
-                        LOGGER.log(Level.INFO, fileEntry.getName().substring(fileEntry.getName().indexOf('.')));
                         fileMappings.add(new FileEndpoint(pathToAddAtBeginningOfMapping + "/" + fileEntry.getName(), fileEntry.getAbsolutePath(), fileEntry.getName().substring(fileEntry.getName().indexOf('.'))));
                     }
                 }

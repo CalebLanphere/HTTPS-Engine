@@ -1,8 +1,9 @@
-package com.CreativityStudios.HTTPS.Sessions;
+package com.CreativityStudios.HTTPS.Sessions.BearerToken;
 
+import com.CreativityStudios.HTTPS.Sessions.Token;
 import com.sun.net.httpserver.Headers;
 
-public class BearerToken implements Token{
+public class BearerToken implements Token {
     private String bearerToken;
 
     public BearerToken(String token) {

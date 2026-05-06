@@ -1,10 +1,14 @@
-package com.CreativityStudios.HTTPS.Authentication;
+package com.CreativityStudios.HTTPS.Authentication.Digest;
 
+import com.CreativityStudios.HTTPS.Authentication.AuthenticationResult;
 import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPRequestHeaders;
 import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPResponseHeaders;
-import com.CreativityStudios.HTTPS.HTTPStatus;
-import com.CreativityStudios.HTTPS.Sessions.CookieSessionManager;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPStatus;
+import com.CreativityStudios.HTTPS.Sessions.Cookie.CookieSessionManager;
+import com.CreativityStudios.HTTPS.Sessions.Cookie.CookieToken;
+import com.CreativityStudios.HTTPS.Sessions.Token;
 import com.sun.net.httpserver.Authenticator;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
 
@@ -17,36 +21,22 @@ import java.util.logging.Logger;
 
 public class DigestAuthenticator extends Authenticator {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final CookieSessionManager sessions = new CookieSessionManager();
 
     @Override
     public Result authenticate(HttpExchange exchange) {
-        LOGGER.log(Level.INFO, exchange.getRequestMethod());
-        HttpPrincipal principal = exchange.getPrincipal();
-        String session = null;
-        LOGGER.log(Level.INFO, exchange.getRequestMethod());
-        LOGGER.log(Level.INFO, String.valueOf(exchange.getRequestHeaders()));
+        Headers headers = exchange.getRequestHeaders();
+        Token token = new CookieToken();
+        token.setToken(headers);
 
-        if(exchange.getRequestHeaders().get("Cookie") != null) {
-            session = String.valueOf(exchange.getRequestHeaders().get("Cookie"));
+        if(CookieSessionManager.isSessionValid(token)) {
+            LOGGER.log(Level.INFO, "Authenticated");
+            HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
+
+            return new Success(newAuthPrincipal);
         }
-
-//        if(sessions.isSessionValid(session)) {
-//            System.out.println(session);
-//            LOGGER.log(Level.INFO, "Authenticated");
-//            HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
-//
-//            return new Success(newAuthPrincipal);
-//        }
-        System.out.println(exchange.getRequestHeaders().get(HTTPRequestHeaders.AUTHORIZATION) == null);
 
         // TODO MAKE SESSIONS WORK
         if(exchange.getRequestHeaders().get(HTTPRequestHeaders.AUTHORIZATION) != null) {
-            LOGGER.log(Level.INFO, "failed isSessionValid");
-            String authProtocol = exchange.getRequestHeaders().get(HTTPRequestHeaders.AUTHORIZATION).getFirst().split(" ")[0];
-
-            switch (authProtocol) {
-                case AuthenticationMethods.DIGEST:
                     String[] authUnsplitValues = exchange.getRequestHeaders().get(HTTPRequestHeaders.AUTHORIZATION).getFirst().split(", ");
                     HashMap<String, String> authParams = new HashMap<>();
                     authUnsplitValues[0] = authUnsplitValues[0].substring(7);
@@ -68,11 +58,10 @@ public class DigestAuthenticator extends Authenticator {
                         if (validateDigestCredentials(authParams)) {
                             HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
 
-                            if(session != null) {
-//                                sessions.add("session=1");
+                            if(token.getToken() != null) {
                                 return new Success(newAuthPrincipal);
                             } else {
-                                exchange.getResponseHeaders().add("Set-Cookie", "session=1");
+                                CookieSessionManager.createSessionToken(exchange, new AuthenticationResult(true));
                                 return new Success(newAuthPrincipal);
                             }
                         }
@@ -81,12 +70,6 @@ public class DigestAuthenticator extends Authenticator {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                default:
-                    exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-                    exchange.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-                    exchange.getResponseHeaders().add(HTTPResponseHeaders.WWW_AUTHENTICATE, "Digest realm=\"" + String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost\", nonce=\"" + LocalDateTime.now() + "\", algorithm=\"MD5\"");
-                    return new Retry(HTTPStatus.UNAUTHORIZED);
-            }
         }
 
         exchange.getResponseHeaders().add(HTTPResponseHeaders.WWW_AUTHENTICATE, "Digest realm=\"" + String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost\", nonce=\"" + LocalDateTime.now() + "\", algorithm=\"MD5\"");

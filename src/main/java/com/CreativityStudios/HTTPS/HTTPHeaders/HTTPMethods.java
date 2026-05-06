@@ -1,4 +1,4 @@
-package com.CreativityStudios.HTTPS;
+package com.CreativityStudios.HTTPS.HTTPHeaders;
 
 public class HTTPMethods {
     /** For grabbing contents from the server */

@@ -1,8 +1,7 @@
-package com.CreativityStudios.HTTPS;
+package com.CreativityStudios.HTTPS.Endpoint;
 
 import com.CreativityStudios.HTTPS.HTTPHandlers.BaseHTTPFileHandler;
 import com.CreativityStudios.HTTPS.HTTPHandlers.BaseHTTPHandler;
-import com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandler;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.lang.reflect.InvocationTargetException;

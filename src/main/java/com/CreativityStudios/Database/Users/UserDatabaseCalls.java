@@ -1,17 +1,14 @@
 package com.CreativityStudios.Database.Users;
 
 import com.CreativityStudios.Database.DatabaseConnector;
-import com.CreativityStudios.Database.UserEntry;
 import com.CreativityStudios.JSON.JSONReader;
 import com.CreativityStudios.JSON.JSONWriter;
-import jakarta.json.JsonObject;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDatabaseCalls {

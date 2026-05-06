@@ -10,7 +10,7 @@
 
 package com.CreativityStudios.JSON;
 
-import com.CreativityStudios.Database.UserPermissions;
+import com.CreativityStudios.Database.Users.UserPermissions;
 import com.CreativityStudios.GCOP.EOCPElement;
 import com.CreativityStudios.GCOP.EOCPValues;
 import jakarta.json.*;

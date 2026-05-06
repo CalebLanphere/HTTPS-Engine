@@ -3,7 +3,7 @@ package com.CreativityStudios.HTTPS.HTTPHandlers;
 import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.CreativityStudios.HTTPS.HTTPResponse;
-import com.CreativityStudios.HTTPS.HTTPStatus;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPStatus;
 
 import java.io.IOException;
 import java.util.logging.Level;

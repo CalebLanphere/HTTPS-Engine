@@ -1,9 +1,12 @@
-package com.CreativityStudios.HTTPS.Authentication;
+package com.CreativityStudios.HTTPS.Authentication.Basic;
 
-import com.CreativityStudios.Database.UserEntry;
+import com.CreativityStudios.Database.Users.UserEntry;
 import com.CreativityStudios.Database.Users.UserDatabaseCalls;
-import com.CreativityStudios.HTTPS.HTTPMethods;
+import com.CreativityStudios.HTTPS.Authentication.AuthenticationResult;
+import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPMethods;
 import com.CreativityStudios.HTTPS.Sessions.*;
+import com.CreativityStudios.HTTPS.Sessions.Cookie.CookieSessionManager;
+import com.CreativityStudios.HTTPS.Sessions.Cookie.CookieToken;
 import com.sun.net.httpserver.*;
 import java.sql.SQLException;
 import java.util.ArrayList;

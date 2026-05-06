@@ -1,8 +1,9 @@
-package com.CreativityStudios.HTTPS.Sessions;
+package com.CreativityStudios.HTTPS.Sessions.Cookie;
 
+import com.CreativityStudios.HTTPS.Sessions.Token;
 import com.sun.net.httpserver.Headers;
 
-public class CookieToken implements Token{
+public class CookieToken implements Token {
     private String cookieToken;
 
     public CookieToken(String token) {

@@ -1,6 +1,8 @@
-package com.CreativityStudios.HTTPS.Sessions;
+package com.CreativityStudios.HTTPS.Sessions.BearerToken;
 
 import com.CreativityStudios.HTTPS.Authentication.AuthenticationResult;
+import com.CreativityStudios.HTTPS.Sessions.Token;
+import com.CreativityStudios.HTTPS.Sessions.UserSession;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.sql.Timestamp;
