@@ -3,12 +3,11 @@ package com.CreativityStudios.HTTPS.Authentication;
 import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPRequestHeaders;
 import com.CreativityStudios.HTTPS.HTTPHeaders.HTTPResponseHeaders;
 import com.CreativityStudios.HTTPS.HTTPStatus;
-import com.CreativityStudios.HTTPS.SessionManager;
+import com.CreativityStudios.HTTPS.Sessions.CookieSessionManager;
 import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpPrincipal;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
 
 public class DigestAuthenticator extends Authenticator {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static final SessionManager sessions = new SessionManager();
+    private static final CookieSessionManager sessions = new CookieSessionManager();
 
     @Override
     public Result authenticate(HttpExchange exchange) {
@@ -32,13 +31,13 @@ public class DigestAuthenticator extends Authenticator {
             session = String.valueOf(exchange.getRequestHeaders().get("Cookie"));
         }
 
-        if(sessions.isSessionValid(session)) {
-            System.out.println(session);
-            LOGGER.log(Level.INFO, "Authenticated");
-            HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
-
-            return new Success(newAuthPrincipal);
-        }
+//        if(sessions.isSessionValid(session)) {
+//            System.out.println(session);
+//            LOGGER.log(Level.INFO, "Authenticated");
+//            HttpPrincipal newAuthPrincipal = new HttpPrincipal("testing", String.valueOf(exchange.getRequestURI()).substring(1) + "@localhost");
+//
+//            return new Success(newAuthPrincipal);
+//        }
         System.out.println(exchange.getRequestHeaders().get(HTTPRequestHeaders.AUTHORIZATION) == null);
 
         // TODO MAKE SESSIONS WORK

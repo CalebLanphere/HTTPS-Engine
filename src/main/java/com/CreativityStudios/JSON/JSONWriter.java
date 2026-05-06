@@ -78,4 +78,11 @@ public class JSONWriter {
 
         return builder.build();
     }
+
+    public static JsonObject createBearerTokenJsonObject(String token) {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        builder.add("Token", token);
+
+        return builder.build();
+    }
 }

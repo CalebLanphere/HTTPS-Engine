@@ -18,6 +18,13 @@ public class UserEntry {
         this.permissions = permissions;
     }
 
+    public UserEntry(UUID id, String email, String domain, UserPermissions permissions) {
+        this.id = id;
+        this.email = email;
+        this.domain = domain;
+        this.permissions = permissions;
+    }
+
     public UserEntry(String email, String password, String domain, UserPermissions permissions) {
         this.id = UUID.randomUUID();
         this.email = email;

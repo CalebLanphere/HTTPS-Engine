@@ -11,11 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDatabaseCalls {
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static ArrayList<UserEntry> getAllUserEntriesFromUsersWithUserEmailAndPassword(String email, String password) throws SQLException {
-        PreparedStatement getUserFromDBStatement = DatabaseConnector.getUserDbReaderConnection().prepareStatement("SELECT * FROM users WHERE userEmail=? && userPassword=?");
+        PreparedStatement getUserFromDBStatement = DatabaseConnector.getUserDbReaderConnection().prepareStatement("SELECT userId, userEmail, userGroup, userPermissions FROM users WHERE userEmail=? && userPassword=?");
         getUserFromDBStatement.setString(1, email);
         getUserFromDBStatement.setString(2, password);
 
@@ -47,11 +50,11 @@ public class UserDatabaseCalls {
             parsedUsers.add(new UserEntry(
                         UUID.fromString(resultFromQuery.getString("userId")),
                         resultFromQuery.getString("userEmail"),
-                        resultFromQuery.getString("userPassword"),
                         resultFromQuery.getString("userGroup"),
                         JSONReader.parseJsonObjectAsUserPermissions(JSONReader.jsonStringToJsonObject(resultFromQuery.getString("userPermissions")))
                     )
             );
+
         }
 
         return parsedUsers;

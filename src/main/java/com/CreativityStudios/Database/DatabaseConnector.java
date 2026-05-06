@@ -39,36 +39,36 @@ public class DatabaseConnector {
             switch (credential.getCredentialType()) {
                 case "Reader":
                     POOLED_READER_CONNECTIONS.setInitialSize(10);
-                    POOLED_READER_CONNECTIONS.setTestOnCreate(true);
-                    POOLED_READER_CONNECTIONS.setTestWhileIdle(true);
-                    POOLED_READER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_READER_CONNECTIONS.setTestOnCreate(false);
+                    POOLED_READER_CONNECTIONS.setTestWhileIdle(false);
+                    POOLED_READER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofSeconds(30));
                     POOLED_READER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
                     POOLED_READER_CONNECTIONS.setUsername(credential.getUsername());
                     POOLED_READER_CONNECTIONS.setPassword(credential.getPassword());
                     break;
                 case "Writer":
                     POOLED_WRITER_CONNECTIONS.setInitialSize(2);
-                    POOLED_WRITER_CONNECTIONS.setTestOnCreate(true);
-                    POOLED_WRITER_CONNECTIONS.setTestWhileIdle(true);
-                    POOLED_WRITER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_WRITER_CONNECTIONS.setTestOnCreate(false);
+                    POOLED_WRITER_CONNECTIONS.setTestWhileIdle(false);
+                    POOLED_WRITER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofSeconds(30));
                     POOLED_WRITER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
                     POOLED_WRITER_CONNECTIONS.setUsername(credential.getUsername());
                     POOLED_WRITER_CONNECTIONS.setPassword(credential.getPassword());
                     break;
                 case "UserDBReader":
                     POOLED_USERDB_READER_CONNECTIONS.setInitialSize(10);
-                    POOLED_USERDB_READER_CONNECTIONS.setTestOnCreate(true);
-                    POOLED_USERDB_READER_CONNECTIONS.setTestWhileIdle(true);
-                    POOLED_USERDB_READER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_USERDB_READER_CONNECTIONS.setTestOnCreate(false);
+                    POOLED_USERDB_READER_CONNECTIONS.setTestWhileIdle(false);
+                    POOLED_USERDB_READER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofSeconds(30));
                     POOLED_USERDB_READER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
                     POOLED_USERDB_READER_CONNECTIONS.setUsername(credential.getUsername());
                     POOLED_USERDB_READER_CONNECTIONS.setPassword(credential.getPassword());
                     break;
                 case "UserDBWriter":
                     POOLED_USERDB_WRITER_CONNECTIONS.setInitialSize(2);
-                    POOLED_USERDB_WRITER_CONNECTIONS.setTestOnCreate(true);
-                    POOLED_USERDB_WRITER_CONNECTIONS.setTestWhileIdle(true);
-                    POOLED_USERDB_WRITER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofMinutes(2));
+                    POOLED_USERDB_WRITER_CONNECTIONS.setTestOnCreate(false);
+                    POOLED_USERDB_WRITER_CONNECTIONS.setTestWhileIdle(false);
+                    POOLED_USERDB_WRITER_CONNECTIONS.setRemoveAbandonedTimeout(Duration.ofSeconds(30));
                     POOLED_USERDB_WRITER_CONNECTIONS.setUrl(credential.getDatabaseUrl());
                     POOLED_USERDB_WRITER_CONNECTIONS.setUsername(credential.getUsername());
                     POOLED_USERDB_WRITER_CONNECTIONS.setPassword(credential.getPassword());

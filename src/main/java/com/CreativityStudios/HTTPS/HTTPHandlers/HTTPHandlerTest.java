@@ -20,10 +20,6 @@ import java.util.logging.Logger;
 public class HTTPHandlerTest extends BaseHTTPHandler{
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public HTTPHandlerTest() {
-        ENDPOINT_URI = "/test";
-    }
-
     // TODO abstract away error handling for incorrect URIs or improper URIs
     // TODO abstract further to hide OPTIONS protocol
     @Override

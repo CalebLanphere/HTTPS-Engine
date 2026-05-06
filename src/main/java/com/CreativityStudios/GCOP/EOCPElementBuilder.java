@@ -123,7 +123,6 @@ public class EOCPElementBuilder {
 
         if(parentValues.getHtmlChildren() != null) {
             for (int i = 0; i < parentValues.getHtmlChildren().size(); i++) {
-                LOGGER.log(Level.INFO, String.valueOf(parentValues.getHtmlChildren().get(i)));
                 parentChildrenValues.add(parentValues.getHtmlChildren().get(i));
             }
         }

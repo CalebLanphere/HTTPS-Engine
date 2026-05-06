@@ -1,7 +1,7 @@
 /**
- * BaseHTTPHandler class
+ * BaseHTTPFileHandler class
  *
- * This class creates the abstraction layer for handling all HTTP responses
+ * This class creates the abstraction layer for handling HTTP responses based on Files stored on the server
  *
  * <p>
  * All HTTP mapping classes can be overriden depending on the requirements of the endpoint,
@@ -22,23 +22,34 @@ package com.CreativityStudios.HTTPS.HTTPHandlers;
 import com.CreativityStudios.Exceptions.IncorrectEndpointException;
 import com.CreativityStudios.Exceptions.NotAcceptedQueryException;
 import com.CreativityStudios.HTTPS.HTTPMethods;
+import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.CreativityStudios.HTTPS.HTTPResponse;
 import com.CreativityStudios.HTTPS.HTTPStatus;
-import com.CreativityStudios.HTTPS.HTTPRequest;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import java.io.*;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BaseHTTPHandler implements HttpHandler {
+public class BaseHTTPFileHandler implements HttpHandler {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     protected String ENDPOINT_URI = "/test";
+    protected String FILE_LOCATION = "/web/index.html";
+    protected String FILE_TYPE = "text/html";
 
     public void setEndpointURI(String endpoint) {
         ENDPOINT_URI = endpoint;
+    }
+
+    public void setFileLocation(String location) {
+        FILE_LOCATION = location;
+    }
+
+    public void setFileType(String type) {
+        FILE_TYPE = type;
     }
 
     /**

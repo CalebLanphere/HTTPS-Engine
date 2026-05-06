@@ -1,4 +1,6 @@
-package com.CreativityStudios.HTTPS.Authentication;
+package com.CreativityStudios.HTTPS.Sessions;
+
+import com.CreativityStudios.HTTPS.Authentication.AuthenticationResult;
 
 import java.sql.Timestamp;
 

@@ -36,6 +36,7 @@ public class HTTPStatus {
     public static final int MOVED_PERMANENTLY = 301;
     /** The content requested was moved to a temporary URI */
     public static final int FOUND = 302;
+    public static final int TEMPORARY_REDIRECT = 307;
     /** The request received by the client is incorrect or not usable */
     public static final int BAD_REQUEST = 400;
     /** The client must authenticate to perform the action requested */

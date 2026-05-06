@@ -77,6 +77,16 @@ public class HTTPResponse {
     }
 
     /**
+     * Writes a byte array into the response body
+     *
+     * @param bytes byte[] that will be sent to the requesting body
+     * @throws IOException If the communication stream is interrupted for any reason
+     */
+    public void addToResponseBody(byte[] bytes) throws IOException {
+        writer.write(bytes);
+    }
+
+    /**
      * Closes the writer stream associated with the response body
      * @throws IOException If the communication stream is interrupted for any reason
      */

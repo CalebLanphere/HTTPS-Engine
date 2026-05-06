@@ -14,6 +14,7 @@ import com.CreativityStudios.Database.DatabaseConnector;
 import com.CreativityStudios.Database.DatabaseCredentials;
 import com.CreativityStudios.File.FileManager;
 import com.CreativityStudios.HTTPS.HTTPSServlet;
+import com.CreativityStudios.HTTPS.Sessions.CookieSessionManager;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,10 +28,13 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final HTTPSServlet servlet = new HTTPSServlet();
     private static DatabaseConnector database = null;
+    private static CookieSessionManager sessionManager;
 
     public static void main(String[] args) {
         try {
              database = new DatabaseConnector();
+            sessionManager = new CookieSessionManager();
+
              LOGGER.log(Level.INFO, String.valueOf(DatabaseConnector.getReaderConnection()));
             servlet.start();
         } catch (Exception e) {

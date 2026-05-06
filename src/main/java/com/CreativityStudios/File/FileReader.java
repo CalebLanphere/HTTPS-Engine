@@ -11,6 +11,12 @@
 package com.CreativityStudios.File;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class FileReader {
     private File file;
@@ -42,5 +48,14 @@ public class FileReader {
         }
         closeFile();
         return stringFromFile;
+    }
+
+    /**
+     * Read the contents of a file to a Byte Array
+     * @return byte[] file as a byte array
+     * @throws IOException if the file reading was interrupted
+     */
+    public byte[] readFileToByteArray() throws IOException {
+        return Files.readAllBytes(file.toPath());
     }
 }

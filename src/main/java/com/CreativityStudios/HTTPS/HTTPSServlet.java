@@ -27,6 +27,8 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,12 +36,14 @@ public class HTTPSServlet {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     /**
-     * Gets all listed endpoints under the Endpoints.json configuration file
+     * Gets all listed endpoints under the Endpoints.json configuration file and all endpoints
+     * that are generated from the files and subdirectories inside the ./web directory
      * @return EndpointConfiguration[] an array of all EndpointConfiguration's read from the configuration file
      * @throws IOException If a file access operation fails or the file is not readable from its stored location
      */
     private static EndpointConfiguration[] getEndpointsFromFile() throws IOException{
         String endpointFileLocation = "src/main/resources/HTTPEndpoints/Endpoints.json";
+        EndpointConfiguration[] configs;
 
         if(!FileManager.doesFileExist(endpointFileLocation)) {
             LOGGER.log(Level.SEVERE, "Endpoints.json does not exist at directory: "
@@ -53,8 +57,20 @@ public class HTTPSServlet {
         }
 
         FileReader reader = new FileReader(endpointFileLocation);
-        EndpointConfiguration[] configs =
+        EndpointConfiguration[] predeclaredConfigs =
                 JSONReader.parseJsonArrayAsEndpointConfigurations(JSONReader.jsonStringToJsonArray(reader.readFileToString()));
+        EndpointConfiguration[] runtimeConfigs = new HTTPEndpointGenerator("src/main/resources/web/").generateEndpointsInsideFolder();
+
+        configs = new EndpointConfiguration[predeclaredConfigs.length + runtimeConfigs.length];
+
+        for(int i = 0, j = 0; i < configs.length; i++) {
+            if(i < predeclaredConfigs.length) {
+                configs[i] = predeclaredConfigs[i];
+            } else {
+                configs[i] = runtimeConfigs[j];
+                j++;
+            }
+        }
 
         return configs;
     }
@@ -97,10 +113,15 @@ public class HTTPSServlet {
 
     /**
      * Starts the HTTPS servlet
+     *
      * First, the HTTPS servlet is created, binding it to the local address at port 8080, with the
      * server devices backlog value used
-     * Second, all user-created endpoints are loaded from the Endpoints.json file
-     * Third, the endpoints are mapped with an authentication requirement if they are dictated to need one
+     * Second, the SSL context is created and prepared for use with each endpoint
+     * Third, the executor is set to create new Threads for each request and reuse previously created threads if possible
+     *
+     * Fourth, all user-created endpoints are loaded from the Endpoints.json file and
+     * all files from the ./web directory, including subdirectories
+     * Then, the endpoints are mapped with an authentication requirement if they are dictated to need one
      * Finally, the server is started
      * @throws IOException If reading getEndpointsFromFile() method has an exception
      * @throws ClassNotFoundException If the HTTPHandler class requested cannot be found
@@ -112,6 +133,7 @@ public class HTTPSServlet {
     public void start() throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
         HttpsServer httpsServer = HttpsServer.create(new InetSocketAddress(8080), 0);
         SSLContext sslContext = createSSLContext();
+        httpsServer.setExecutor(Executors.newCachedThreadPool());
 
         for (EndpointConfiguration config : getEndpointsFromFile()) {
             if(config.isAuthRequired()) {
@@ -125,6 +147,7 @@ public class HTTPSServlet {
 
             }
         }
+
         httpsServer.start();
     }
 }
