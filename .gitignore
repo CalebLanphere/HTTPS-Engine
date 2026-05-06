@@ -45,3 +45,7 @@ build/
 src/main/resources/Database/.dbaccess.json
 src/main/resources/SSLKeystores/clientkeystore
 src/main/resources/Database/.TempDatabaseInitializationCommands.sql
+src/main/resources/web/.idea/vcs.xml
+src/main/resources/web/.idea/modules.xml
+src/main/resources/web/.idea/workspace.xml
+/.idea/
