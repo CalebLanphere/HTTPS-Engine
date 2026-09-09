@@ -1,3 +1,10 @@
+/**
+ * Cookie Session Manager
+ *
+ * Handles session tokens by sending the requestee a Cookie, which contains a UUID for authentication and state
+ * This UUID is mapped to UserSession object, which contains the authenticated users email, domain, and
+ */
+
 package com.CreativityStudios.HTTPS.Sessions.Cookie;
 
 import com.CreativityStudios.HTTPS.Authentication.AuthenticationResult;
@@ -28,6 +35,7 @@ public class CookieSessionManager{
     }
 
     public static UserSession add(Token sessionToken, AuthenticationResult authResult) {
+        // TODO MERGE UserSession class INTO UserEntry class
         sessions.put(sessionToken.getToken(), new UserSession(authResult, createSessionExpiryTimestamp()));
         return sessions.get(sessionToken.getToken());
     }
