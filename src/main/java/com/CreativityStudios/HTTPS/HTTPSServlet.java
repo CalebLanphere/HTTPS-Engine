@@ -12,6 +12,7 @@ package com.CreativityStudios.HTTPS;
 
 import com.CreativityStudios.File.FileManager;
 import com.CreativityStudios.File.FileReader;
+import com.CreativityStudios.File.ResourcePaths;
 import com.CreativityStudios.HTTPS.Authentication.Basic.BasicAuthentication;
 import com.CreativityStudios.HTTPS.Endpoint.EndpointConfiguration;
 import com.CreativityStudios.HTTPS.Endpoint.HTTPEndpointGenerator;
@@ -24,6 +25,7 @@ import javax.net.ssl.TrustManagerFactory;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
+import java.nio.file.FileSystems;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.concurrent.Executors;
@@ -40,7 +42,8 @@ public class HTTPSServlet {
      * @throws IOException If a file access operation fails or the file is not readable from its stored location
      */
     private static EndpointConfiguration[] getEndpointsFromFile() throws IOException{
-        String endpointFileLocation = "src/main/resources/Endpoints/Endpoints.json";
+        String endpointFileLocation = ResourcePaths.PWD_RESOURCES_ENDPOINTS + ResourcePaths.SEPARATOR + "Endpoints.json";
+        LOGGER.info(endpointFileLocation);
         EndpointConfiguration[] configs;
 
         if(!FileManager.doesFileExist(endpointFileLocation)) {
@@ -57,7 +60,7 @@ public class HTTPSServlet {
         FileReader reader = new FileReader(endpointFileLocation);
         EndpointConfiguration[] predeclaredConfigs =
                 JSONReader.parseJsonArrayAsEndpointConfigurations(JSONReader.jsonStringToJsonArray(reader.readFileToString()));
-        EndpointConfiguration[] runtimeConfigs = new HTTPEndpointGenerator("src/main/resources/web/").generateGetEndpointsInsideFolder();
+        EndpointConfiguration[] runtimeConfigs = new HTTPEndpointGenerator(ResourcePaths.PWD_RESOURCES_WEB).generateGetEndpointsInsideFolder();
 
         configs = new EndpointConfiguration[predeclaredConfigs.length + runtimeConfigs.length];
 
@@ -92,7 +95,7 @@ public class HTTPSServlet {
         // "keytool -keystore 'nameoffile' -genkey -alias 'keystore name' -keyalg 'algorithm of the key'"
         // Last generated keystore used 'RSA' for the algorithm, 'clientkeystore' as the file name,
         // and 'server' for the alias
-        keys.load(new FileInputStream("src/main/resources/SSLKeystores/clientkeystore"), "Password".toCharArray());
+        keys.load(new FileInputStream(ResourcePaths.PWD_RESOURCES_SSL + ResourcePaths.SEPARATOR + "clientkeystore"), "Password".toCharArray());
 
         // Creates a factory that can send around copies of the KeyStore
         KeyManagerFactory keyFactory = KeyManagerFactory.getInstance("SunX509");

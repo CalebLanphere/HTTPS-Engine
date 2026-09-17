@@ -11,6 +11,7 @@
 package com.CreativityStudios.Database;
 
 import com.CreativityStudios.File.FileReader;
+import com.CreativityStudios.File.ResourcePaths;
 import com.CreativityStudios.JSON.JSONReader;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -32,7 +33,7 @@ public class DatabaseConnector {
 
     // TODO make properly static by removing constructor and forcing it to construct under usage
     public DatabaseConnector() throws IOException {
-        FileReader reader = new FileReader("src/main/resources/Database/.dbaccess.json");
+        FileReader reader = new FileReader( ResourcePaths.PWD_RESOURCES_DATABASE + ResourcePaths.SEPARATOR + ".dbaccess.json");
         DatabaseCredentials[] credentials = JSONReader.parseJsonObjectAsDatabaseCredentials(JSONReader.jsonStringToJsonObject(reader.readFileToString()));
 
         for (DatabaseCredentials credential : credentials) {

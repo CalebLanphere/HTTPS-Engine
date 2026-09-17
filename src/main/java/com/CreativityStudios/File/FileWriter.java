@@ -10,6 +10,10 @@
 
 package com.CreativityStudios.File;
 
+import com.CreativityStudios.JSON.JSONReader;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,6 +31,20 @@ public class FileWriter {
     public FileWriter(String pathToFile) throws FileNotFoundException {
         file = new File(pathToFile);
         writer = new PrintStream(new FileOutputStream(file));
+    }
+
+    public boolean writeJsonToFile(JsonObject object) {
+        writer.print(JSONReader.parseJsonObjectAsString(object));
+        writer.flush();
+
+        return true;
+    }
+
+    public boolean writeJsonToFile(JsonArray jsonArray) {
+        writer.print(JSONReader.parseJsonArrayAsString(object));
+        writer.flush();
+
+        return true;
     }
 
 }

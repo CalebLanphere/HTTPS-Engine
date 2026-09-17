@@ -31,4 +31,40 @@ public class JSONWriter {
 
         return builder.build();
     }
+
+    /**
+     * Creates a Json formatted dbaccess file that is read by DatabaseConnector to setup database communications
+     * @return JsonObject object created
+     */
+    public static JsonObject createDefaultDbAccessConfigJsonObject() {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        JsonObject dbCredentialArray = builder.add("CredentialType", "null")
+                .add("Username", "null")
+                .add("Password", "null")
+                .build();
+
+        arrBuilder.add(dbCredentialArray);
+        arrBuilder.add(dbCredentialArray);
+        arrBuilder.add(dbCredentialArray);
+        arrBuilder.add(dbCredentialArray);
+
+        builder.add("DatabaseURL", "null");
+        builder.add("databaseCredentials", arrBuilder.build());
+
+        return builder.build();
+    }
+
+    public static JsonArray createDefaultEndpointsJsonObject() {
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+         arrBuilder.add(builder.add("endpoint", "/welcome")
+                .add("handlerClass", "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPDefaultGetHandler")
+                .add("requireAuthentication", "false")
+                .build());
+
+        return arrBuilder.build();
+    }
 }

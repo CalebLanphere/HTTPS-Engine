@@ -26,6 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+
+
             database = new DatabaseConnector();
             sessionManager = new CookieSessionManager();
 

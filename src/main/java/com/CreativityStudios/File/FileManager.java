@@ -13,6 +13,7 @@ package com.CreativityStudios.File;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -38,8 +39,20 @@ public class FileManager {
      * @throws IOException If the communication chain for the file is interrupted
      */
     public static boolean createFileAtPath(String pathToAddFileAt, String fileName) throws IOException {
-        file = new File(pathToAddFileAt + "/" + fileName);
+        file = new File(pathToAddFileAt + ResourcePaths.SEPARATOR + fileName);
         return file.createNewFile();
+    }
+
+    /**
+     * Creates a directory at the requested path inside the PWD
+     *
+     * @param pathToAddFileAt Pathway to have the directory generated
+     * @return boolean if directory creation was successful
+     * @throws IOException If the communication chain for the file is interrupted
+     */
+    public static boolean createDirectoryAtPath(String pathToAddFileAt) throws IOException {
+        file = new File(pathToAddFileAt);
+        return file.mkdir();
     }
 
     // @TODO properly create hidden file
@@ -47,10 +60,10 @@ public class FileManager {
         boolean result = false;
 
         if(System.getProperty("os.name").equals("Windows_NT")) {
-            file = new File(pathToAddFileAt + "/" + fileName);
-            Files.setAttribute(Path.of(pathToAddFileAt + "/" + fileName), "dos:hidden", true);
+            file = new File(pathToAddFileAt + ResourcePaths.SEPARATOR + fileName);
+            Files.setAttribute(Path.of(pathToAddFileAt + ResourcePaths.SEPARATOR + fileName), "dos:hidden", true);
         } else {
-            file = new File(pathToAddFileAt + "/." + fileName);
+            file = new File(pathToAddFileAt + ResourcePaths.SEPARATOR + "." + fileName);
             result = file.createNewFile();
         }
 
