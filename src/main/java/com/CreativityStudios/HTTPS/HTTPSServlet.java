@@ -40,7 +40,7 @@ public class HTTPSServlet {
      * @throws IOException If a file access operation fails or the file is not readable from its stored location
      */
     private static EndpointConfiguration[] getEndpointsFromFile() throws IOException{
-        String endpointFileLocation = "src/main/resources/HTTPEndpoints/Endpoints.json";
+        String endpointFileLocation = "src/main/resources/Endpoints/Endpoints.json";
         EndpointConfiguration[] configs;
 
         if(!FileManager.doesFileExist(endpointFileLocation)) {
@@ -57,7 +57,7 @@ public class HTTPSServlet {
         FileReader reader = new FileReader(endpointFileLocation);
         EndpointConfiguration[] predeclaredConfigs =
                 JSONReader.parseJsonArrayAsEndpointConfigurations(JSONReader.jsonStringToJsonArray(reader.readFileToString()));
-        EndpointConfiguration[] runtimeConfigs = new HTTPEndpointGenerator("src/main/resources/web/").generateEndpointsInsideFolder();
+        EndpointConfiguration[] runtimeConfigs = new HTTPEndpointGenerator("src/main/resources/web/").generateGetEndpointsInsideFolder();
 
         configs = new EndpointConfiguration[predeclaredConfigs.length + runtimeConfigs.length];
 

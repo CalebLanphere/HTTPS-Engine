@@ -17,7 +17,7 @@ public class HTTPEndpointGenerator {
         PATH = pathToNavigate;
     }
 
-    public EndpointConfiguration[] generateEndpointsInsideFolder() {
+    public EndpointConfiguration[] generateGetEndpointsInsideFolder() {
         ArrayList<FileEndpoint> createdFileEndpoints = navigateFolder(PATH, "");
         int amtOfEndpoints = createdFileEndpoints.size();
         EndpointConfiguration[] endpoints = new EndpointConfiguration[amtOfEndpoints];
@@ -30,6 +30,13 @@ public class HTTPEndpointGenerator {
 
         return endpoints;
     }
+
+//    public EndpointConfiguration[] generateApiEndpointsInsideFolder() {
+//        ArrayList<FileEndpoint> createdFileEndpoints =
+//        int amtOfEndpoints = createdFileEndpoints.size();
+//        EndpointConfiguration[] endpoints = new EndpointConfiguration[amtOfEndpoints];
+//        int index = 0;
+//    }
 
     public ArrayList<FileEndpoint> navigateFolder(String pathToNavigate, String pathToAddAtBeginningOfMapping) {
         File directory = new File(pathToNavigate);

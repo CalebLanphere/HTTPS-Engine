@@ -1,10 +1,5 @@
 [
   {
-    "endpoint": "/test",
-    "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandlerTest",
-    "requireAuthentication": true
-  },
-  {
     "endpoint": "/health",
     "handlerClass": "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandler",
     "requireAuthentication": false
