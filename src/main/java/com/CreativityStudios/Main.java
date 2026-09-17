@@ -13,6 +13,8 @@ package com.CreativityStudios;
 import com.CreativityStudios.Database.DatabaseConnector;
 import com.CreativityStudios.HTTPS.HTTPSServlet;
 import com.CreativityStudios.HTTPS.Sessions.Cookie.CookieSessionManager;
+import com.CreativityStudios.Initialization.HTTPSServerInitialization;
+import com.CreativityStudios.Initialization.HTTPSServerSetup;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -23,18 +25,21 @@ public class Main {
     private static final HTTPSServlet servlet = new HTTPSServlet();
     private static DatabaseConnector database = null;
     private static CookieSessionManager sessionManager;
+    private static final int port = 8080;
 
     public static void main(String[] args) {
         try {
-
+            if(!HTTPSServerInitialization.readyToInitialize()) {
+                HTTPSServerSetup.setupApplication();
+            }
 
             database = new DatabaseConnector();
             sessionManager = new CookieSessionManager();
 
-            servlet.start();
+            servlet.start(port);
         } catch (Exception e) {
             // Logs the exception received, the class that issued it, and the message associated
-            LOGGER.log(Level.SEVERE, "Error on starting HTTP Servlet: " + e.getClass() + " " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+            LOGGER.log(Level.SEVERE, "Error on starting HTTPS Servlet: " + e.getClass() + " " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             System.exit(1);
         }
         LOGGER.log(Level.INFO, "Service started");

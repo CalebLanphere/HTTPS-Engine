@@ -131,8 +131,8 @@ public class HTTPSServlet {
      * @throws InstantiationException If the newInstance() method being called cannot be called on the class that is attempted to be created
      * @throws IllegalAccessException If the newInstance() method being called does not have permission to create the new instance
      */
-    public void start() throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
-        HttpsServer httpsServer = HttpsServer.create(new InetSocketAddress(8080), 0);
+    public void start(int port) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
+        HttpsServer httpsServer = HttpsServer.create(new InetSocketAddress(port), 0);
         SSLContext sslContext = createSSLContext();
         httpsServer.setExecutor(Executors.newCachedThreadPool());
 

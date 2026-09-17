@@ -73,13 +73,15 @@ public class JSONReader {
     }
 
     public static String parseJsonArrayAsString(JsonArray array) {
-        String[] strings = new String[array.size()];
+        String string = "[";
 
         for(int i = 0; i < array.size(); i++) {
             JsonObject object = array.getJsonObject(i);
-            strings[i] = parseJsonObjectAsString(object);
+            string = string.concat(parseJsonObjectAsString(object) + "");
         }
-        return configs;
+
+        string = string.concat("]");
+        return string;
     }
 
     public static UserPermissions parseJsonObjectAsUserPermissions(JsonObject object) {

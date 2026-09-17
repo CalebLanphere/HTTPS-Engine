@@ -17,7 +17,7 @@ public class HTTPDefaultGetHandler extends BaseHTTPFileHandler{
     // TODO abstract away error handling for incorrect URIs or improper URIs
     // TODO abstract further to hide OPTIONS protocol
     @Override
-    public void getMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    public void get(HTTPRequest request, HTTPResponse response) throws IOException {
         try {
             super.isURIPathExact(request.getURIPath());
         } catch(IncorrectEndpointException e) {
@@ -34,7 +34,7 @@ public class HTTPDefaultGetHandler extends BaseHTTPFileHandler{
     }
 
     @Override
-    protected void putMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    protected void put(HTTPRequest request, HTTPResponse response) throws IOException {
         HashMap<String, Object> map = new HashMap<>();
         map.put("query", null);
         map.put("id", null);
@@ -58,7 +58,7 @@ public class HTTPDefaultGetHandler extends BaseHTTPFileHandler{
     }
 
     @Override
-    protected void optionsMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    protected void options(HTTPRequest request, HTTPResponse response) throws IOException {
         response.addHeaderEntry("Access-Control-Allow-Origin", "http://localhost:63343");
         response.addHeaderEntry("Access-Control-Allow-Credentials", "true");
         response.addHeaderEntry("Access-Control-Allow-Methods", "GET, PUT, OPTIONS");

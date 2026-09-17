@@ -41,7 +41,7 @@ public class FileWriter {
     }
 
     public boolean writeJsonToFile(JsonArray jsonArray) {
-        writer.print(JSONReader.parseJsonArrayAsString(object));
+        writer.print(JSONReader.parseJsonArrayAsString(jsonArray));
         writer.flush();
 
         return true;

@@ -61,8 +61,8 @@ public class JSONWriter {
         JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 
          arrBuilder.add(builder.add("endpoint", "/welcome")
-                .add("handlerClass", "com.CreativityStudios.HTTPS.HTTPHandlers.HTTPDefaultGetHandler")
-                .add("requireAuthentication", "false")
+                .add("handlerClass", "com.CreativityStudios.HTTPS.HTTPHandlers.BaseHTTPHandler")
+                .add("requireAuthentication", false)
                 .build());
 
         return arrBuilder.build();

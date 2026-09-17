@@ -53,37 +53,39 @@ public class BaseHTTPHandler implements HttpHandler {
         HTTPResponse response = new HTTPResponse(exchange);
 
         try {
+//            try {
+//                isURIPathContainingQueryMatch(request.getURIPath(), request);
+//            } catch (IncorrectEndpointException e) {
+//
+//            }
+
             switch (request.getRequestMethod()) {
                 case HTTPMethods.GET:
-                    try {
-                        getMapping(request, response);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    get(request, response);
                     break;
                 case HTTPMethods.POST:
-                    postMapping(request, response);
+                    post(request, response);
                     break;
                 case HTTPMethods.PUT:
-                    putMapping(request, response);
+                    put(request, response);
                     break;
                 case HTTPMethods.DELETE:
-                    deleteMapping(request, response);
+                    delete(request, response);
                     break;
                 case HTTPMethods.OPTIONS:
-                    optionsMapping(request, response);
+                    options(request, response);
                     break;
                 case HTTPMethods.TRACE:
-                    traceMapping(request, response);
+                    trace(request, response);
                     break;
                 case HTTPMethods.PATCH:
-                    patchMapping(request, response);
+                    patch(request, response);
                     break;
                 case HTTPMethods.HEAD:
-                    headMapping(request, response);
+                    head(request, response);
                     break;
                 case HTTPMethods.CONNECT:
-                    connectMapping(request, response);
+                    connect(request, response);
                     break;
                 default:
                     defaultMapping(request, response);
@@ -103,7 +105,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void getMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void get(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -115,7 +117,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void postMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void post(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -127,7 +129,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void putMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void put(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -139,7 +141,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void deleteMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void delete(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -151,7 +153,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void optionsMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void options(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -162,7 +164,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void traceMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void trace(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -174,7 +176,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void patchMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void patch(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -186,7 +188,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void headMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void head(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 
@@ -197,7 +199,7 @@ public class BaseHTTPHandler implements HttpHandler {
      * @param response HTTPResponse that will be returned
      * @throws IOException If connection is interrupted
      */
-    protected void connectMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    protected void connect(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         defaultMapping(request, response);
     }
 

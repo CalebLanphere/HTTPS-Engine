@@ -57,15 +57,15 @@ public class FileManager {
 
     // @TODO properly create hidden file
     public static boolean createFileAtPath(String pathToAddFileAt, String fileName, boolean createHiddenFile) throws IOException {
-        boolean result = false;
+        boolean result;
 
         if(System.getProperty("os.name").equals("Windows_NT")) {
             file = new File(pathToAddFileAt + ResourcePaths.SEPARATOR + fileName);
             Files.setAttribute(Path.of(pathToAddFileAt + ResourcePaths.SEPARATOR + fileName), "dos:hidden", true);
         } else {
             file = new File(pathToAddFileAt + ResourcePaths.SEPARATOR + "." + fileName);
-            result = file.createNewFile();
         }
+        result = file.createNewFile();
 
         return result;
     }
