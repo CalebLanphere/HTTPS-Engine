@@ -8,6 +8,10 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/aws.xml
+.idea/awsToolkit.xml
+.idea/dataSources.xml
+.idea/db-forest-config.xml
 *.iws
 *.iml
 *.ipr
@@ -36,3 +40,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Project Files ###
+src/main/resources/Database/.dbaccess.json
+src/main/resources/SSLKeystores/clientkeystore
+src/main/resources/Database/.TempDatabaseInitializationCommands.sql
+src/main/resources/web/.idea/vcs.xml
+src/main/resources/web/.idea/modules.xml
+src/main/resources/web/.idea/workspace.xml
+/.idea/

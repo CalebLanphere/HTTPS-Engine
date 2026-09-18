@@ -1,0 +1,12 @@
+[
+  {
+    "endpoint":"/welcome",
+    "handlerClass":"com.CreativityStudios.HTTPS.HTTPHandlers.BaseHTTPHandler",
+    "requireAuthentication":false
+  },
+  {
+    "endpoint":"/testInside",
+    "handlerClass":"com.CreativityStudios.HTTPS.HTTPHandlers.HTTPHandlerTest",
+    "requireAuthentication":false
+  }
+]
