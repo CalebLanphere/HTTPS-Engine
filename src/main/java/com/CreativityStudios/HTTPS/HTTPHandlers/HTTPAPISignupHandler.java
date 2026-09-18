@@ -18,7 +18,7 @@ public class HTTPAPISignupHandler extends BaseHTTPHandler{
 
     // TODO abstract away error handling for incorrect URIs or improper URIs
     @Override
-    public void putMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    public void put(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         try {
             super.isURIPathExact(request.getURIPath());
         } catch(IncorrectEndpointException e) {
@@ -42,7 +42,7 @@ public class HTTPAPISignupHandler extends BaseHTTPHandler{
     }
 
     @Override
-    protected void optionsMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    protected void options(HTTPRequest request, HTTPResponse response) throws IOException {
         LOGGER.log(Level.INFO, "options triggered");
         response.addHeaderEntry("Access-Control-Allow-Origin", "http://localhost:63343");
         response.addHeaderEntry("Access-Control-Allow-Credentials", "true");

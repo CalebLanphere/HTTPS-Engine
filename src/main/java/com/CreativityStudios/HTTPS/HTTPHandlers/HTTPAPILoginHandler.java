@@ -14,7 +14,7 @@ public class HTTPAPILoginHandler extends BaseHTTPHandler{
 
     // TODO abstract away error handling for incorrect URIs or improper URIs
     @Override
-    public void postMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    public void post(HTTPRequest request, HTTPResponse response) throws IOException {
         try {
             super.isURIPathExact(request.getURIPath());
         } catch(IncorrectEndpointException e) {
@@ -31,7 +31,7 @@ public class HTTPAPILoginHandler extends BaseHTTPHandler{
     }
 
     @Override
-    protected void optionsMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    protected void options(HTTPRequest request, HTTPResponse response) throws IOException {
         LOGGER.log(Level.INFO, "options triggered");
         response.addHeaderEntry("Access-Control-Allow-Origin", "http://localhost:63343");
         response.addHeaderEntry("Access-Control-Allow-Credentials", "true");

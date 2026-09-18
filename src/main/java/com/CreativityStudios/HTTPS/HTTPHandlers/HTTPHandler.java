@@ -20,7 +20,7 @@ public class HTTPHandler extends BaseHTTPHandler{
 
     // TODO abstract away error handling for incorrect URIs or improper URIs
     @Override
-    public void getMapping(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
+    public void get(HTTPRequest request, HTTPResponse response) throws IOException, SQLException {
         Connection conn = DatabaseConnector.getReaderConnection();
         ResultSet dbresp = conn.createStatement().executeQuery("SELECT * FROM test;");
         String resp = String.valueOf(dbresp);
@@ -46,7 +46,7 @@ public class HTTPHandler extends BaseHTTPHandler{
     }
 
     @Override
-    protected void putMapping(HTTPRequest request, HTTPResponse response) throws IOException {
+    protected void put(HTTPRequest request, HTTPResponse response) throws IOException {
         HashMap<String, Object> map = new HashMap<>();
         map.put("query", null);
         map.put("id", null);
